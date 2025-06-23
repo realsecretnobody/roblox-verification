@@ -74,7 +74,7 @@ app.get('/roblox-callback', async (req, res) => {
 
     const { sub: robloxId, name: robloxUsername } = userRes.data;
 
-    res.send(`<h2>✅ Verified as ${robloxUsername} (ID: ${robloxId})</h2>`);
+    res.redirect(`/verified.html?username=${encodeURIComponent(robloxUsername)}&id=${robloxId}`);
   } catch (err) {
     console.error(err.response?.data || err);
     res.status(500).send('OAuth2 flow failed.');
