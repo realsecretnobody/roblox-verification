@@ -23,10 +23,10 @@ app.get('/verify', (req, res) => {
   }
 
   const authURL = `https://apis.roblox.com/oauth/v1/authorize` +
-    `?client_id=${ROBLOX_CLIENT_ID}` +
-    `&redirect_uri=${encodeURIComponent(ROBLOX_REDIRECT_URI)}` +
-    `&response_type=code` +
-    `&scope=openid`;
+  `?client_id=${ROBLOX_CLIENT_ID}` +
+  `&redirect_uri=${encodeURIComponent(ROBLOX_REDIRECT_URI)}` +
+  `&response_type=code` +
+  `&scope=openid user.id user.profile`;
 
   res.redirect(authURL);
 });
