@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
-require('dotenv').config(); // ✅ Load env variables
+require('dotenv').config(); // Load env variables
 
 const app = express();
 
@@ -23,10 +23,10 @@ app.get('/verify', (req, res) => {
   }
 
   const authURL = `https://apis.roblox.com/oauth/v1/authorize` +
-  `?client_id=${ROBLOX_CLIENT_ID}` +
-  `&redirect_uri=${encodeURIComponent(ROBLOX_REDIRECT_URI)}` +
-  `&response_type=code` +
-  `&scope=openid user.id user.profile`;
+    `?client_id=${ROBLOX_CLIENT_ID}` +
+    `&redirect_uri=${encodeURIComponent(ROBLOX_REDIRECT_URI)}` +
+    `&response_type=code` +
+    `&scope=openid profile`;
 
   res.redirect(authURL);
 });
@@ -74,6 +74,7 @@ app.get('/roblox-callback', async (req, res) => {
 
     const { sub: robloxId, name: robloxUsername } = userRes.data;
 
+    // Redirect or respond with user info
     res.redirect(`/verified.html?username=${encodeURIComponent(robloxUsername)}&id=${robloxId}`);
   } catch (err) {
     console.error(err.response?.data || err);
