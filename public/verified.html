@@ -3,171 +3,117 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lakeview Roleplay | Roblox Verification Successful</title>
+  <title>Account Linked</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Outfit', sans-serif;
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      padding: 0;
+      background-color: #0d0d0d;
       color: #fff;
-      background: linear-gradient(145deg, #000000, #8b0000);
-    }
-
-    .container {
-      position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 2rem;
-      flex-direction: column;
+      align-items: center;
+      height: 100vh;
     }
 
     .card {
-      background-color: #1e293b;
-      padding: 2rem 3rem;
-      border-radius: 1.5rem;
-      max-width: 500px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      text-align: left;
+      background-color: #121212;
+      padding: 3rem 2rem;
+      border-radius: 1.25rem;
+      text-align: center;
+      max-width: 460px;
+      width: 100%;
+    }
+
+    .avatar-wrapper {
+      margin-bottom: 1.5rem;
+    }
+
+    .roblox-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid #f43f5e;
+      object-fit: cover;
     }
 
     h1 {
-      color: #4ade80;
-      font-size: 2.2rem;
+      color: #f43f5e;
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
 
     p {
-      font-size: 1.2rem;
+      color: #d1d5db;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
     }
 
-    .user-info {
-      margin-top: 1.5rem;
-      background-color: #334155;
-      padding: 1rem;
-      border-radius: 1rem;
+    .footer {
+      border-top: 1px solid #2c2c2c;
+      padding-top: 1rem;
       display: flex;
       align-items: center;
-      gap: 1rem;
+      justify-content: center;
+      gap: 0.75rem;
     }
 
-    .avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 0.75rem;
-      border: 2px solid #fff;
+    .discord-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
       object-fit: cover;
     }
 
-    .info-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .username {
-      font-weight: 700;
-      font-size: 1.3rem;
-    }
-
-    .id {
-      font-size: 0.95rem;
-      color: #94a3b8;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      color: white;
-      background: #4f46e5;
-      border: none;
-      border-radius: 0.75rem;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-
-    .btn:hover {
-      background: #6366f1;
-    }
-
-    .message {
-      margin-top: 2rem;
-      font-size: 1.1rem;
-      color: #cbd5e1;
-    }
-
-    .bold {
-      font-weight: bold;
-      color: #fff;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .user-info {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-
-      .avatar {
-        margin-bottom: 1rem;
-      }
+    .discord-name {
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>Verification Successful</h1>
-      <p>Hello <span class="bold">@realsecretnobody</span> (976010151570067507), you have successfully been verified as <span class="bold">@secret</span> (1741034094).</p>
+  <div class="card">
+    <div class="avatar-wrapper">
+      <img id="robloxAvatar" class="roblox-avatar" src="" alt="Roblox Avatar" />
+    </div>
 
-      <div class="user-info">
-        <img id="avatar" class="avatar" src="" alt="User Avatar" />
-        <div class="info-text">
-          <div class="username" id="username">Loading...</div>
-          <div class="id" id="userId"></div>
-        </div>
-      </div>
+    <h1>Account Linked</h1>
+    <p>
+      Hey <span id="discordName"></span> (<span id="discordId"></span>)!<br>
+      Your Roblox account <span id="robloxUsername"></span> (<span id="robloxId"></span>) has been linked to your Discord account.
+    </p>
 
-      <a class="btn" href="/">Back to Home</a>
-      <a class="btn" href="/discord-login" style="margin-left: 1rem;">Reverify</a>
+    <div class="footer">
+      <img id="discordAvatar" class="discord-avatar" src="" alt="Discord Avatar" />
+      <span class="discord-name" id="footerDiscordName"></span>
     </div>
   </div>
 
-  <div class="message" id="messageBox"></div>
-
   <script>
     const params = new URLSearchParams(window.location.search);
-    const username = params.get("username");
-    const userId = params.get("id");
+    const robloxUsername = params.get("username");
+    const robloxId = params.get("id");
+    const discordUser = params.get("discordUser");
+    const discordId = params.get("discordId");
 
-    if (username && userId) {
-      document.getElementById("username").textContent = username;
-      document.getElementById("userId").textContent = `Roblox ID: ${userId}`;
-      const avatarUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png`;
-      fetch(avatarUrl)
-        .then(res => res.json())
-        .then(data => {
-          const img = data.data[0]?.imageUrl;
-          if (img) {
-            document.getElementById("avatar").src = img;
-          }
-        });
-    } else {
-      document.querySelector(".user-info").innerHTML = "<p>⚠️ No user data provided.</p>";
-      document.getElementById("avatar").style.display = "none";
-    }
+    document.getElementById("discordName").textContent = discordUser || "Unknown";
+    document.getElementById("discordId").textContent = discordId || "N/A";
+    document.getElementById("robloxUsername").textContent = robloxUsername || "Unknown";
+    document.getElementById("robloxId").textContent = robloxId || "N/A";
+    document.getElementById("footerDiscordName").textContent = discordUser || "Unknown";
+
+    const robloxAvatarUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${robloxId}&size=150x150&format=Png`;
+    fetch(robloxAvatarUrl)
+      .then(res => res.json())
+      .then(data => {
+        const img = data?.data?.[0]?.imageUrl;
+        if (img) document.getElementById("robloxAvatar").src = img;
+      });
+
+    const discordAvatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${discordId}.png?size=64`;
+    document.getElementById("discordAvatar").src = discordAvatarUrl;
   </script>
 </body>
 </html>
