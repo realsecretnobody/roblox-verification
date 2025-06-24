@@ -16,36 +16,15 @@
       text-align: center;
       color: #fff;
       background: linear-gradient(145deg, #000000, #8b0000);
-      overflow: hidden;
-      position: relative;
-    }
-
-    #glow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 150px);
-      transition: background-position 0.2s ease-out;
-      z-index: 1;
     }
 
     .container {
       position: relative;
-      z-index: 2;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 2rem;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 1rem;
-      border: 3px solid #fff;
-      object-fit: cover;
+      flex-direction: column;
     }
 
     .card {
@@ -72,6 +51,23 @@
       background-color: #334155;
       padding: 1rem;
       border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 0.75rem;
+      border: 2px solid #fff;
+      object-fit: cover;
+    }
+
+    .info-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .username {
@@ -117,22 +113,31 @@
         flex-direction: column;
         text-align: center;
       }
+
+      .user-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .avatar {
+        margin-bottom: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="glow"></div>
-
   <div class="container">
-    <img id="avatar" class="avatar" src="" alt="User Avatar" />
-
     <div class="card">
       <h1>Verification Successful</h1>
       <p>Hello <span class="bold">@realsecretnobody</span> (976010151570067507), you have successfully been verified as <span class="bold">@secret</span> (1741034094).</p>
 
       <div class="user-info">
-        <div class="username" id="username">Loading...</div>
-        <div class="id" id="userId"></div>
+        <img id="avatar" class="avatar" src="" alt="User Avatar" />
+        <div class="info-text">
+          <div class="username" id="username">Loading...</div>
+          <div class="id" id="userId"></div>
+        </div>
       </div>
 
       <a class="btn" href="/">Back to Home</a>
@@ -150,10 +155,7 @@
     if (username && userId) {
       document.getElementById("username").textContent = username;
       document.getElementById("userId").textContent = `Roblox ID: ${userId}`;
-
-      // Use Roblox thumbnail API
       const avatarUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png`;
-      
       fetch(avatarUrl)
         .then(res => res.json())
         .then(data => {
@@ -166,14 +168,6 @@
       document.querySelector(".user-info").innerHTML = "<p>⚠️ No user data provided.</p>";
       document.getElementById("avatar").style.display = "none";
     }
-
-    // Smooth glow follow effect
-    const glow = document.getElementById("glow");
-    document.addEventListener("mousemove", (e) => {
-      const x = e.clientX / window.innerWidth * 100;
-      const y = e.clientY / window.innerHeight * 100;
-      glow.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255, 255, 255, 0.12), transparent 150px)`;
-    });
   </script>
 </body>
 </html>
