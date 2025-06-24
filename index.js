@@ -153,11 +153,8 @@ app.get('/roblox-callback', async (req, res) => {
 
     // You now have both Discord and Roblox user info
     // For example, respond with JSON or redirect to verified page
-    res.send({
-      message: 'Verification complete!',
-      discordUser: req.session.discordUser,
-      robloxUser: { id: robloxId, username: robloxUsername }
-    });
+    res.redirect(`/verified.html?username=${encodeURIComponent(robloxUsername)}&id=${encodeURIComponent(robloxId)}`);
+
 
   } catch (err) {
     console.error(err.response?.data || err);
