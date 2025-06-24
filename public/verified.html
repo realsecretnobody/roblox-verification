@@ -3,28 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lakeview Roleplay |Roblox Verification Successful</title>
+  <title>Lakeview Roleplay | Roblox Verification Successful</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Outfit', sans-serif;
-      background: linear-gradient(145deg, #0f172a, #1e293b);
-      color: #fff;
+      margin: 0;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      margin: 0;
       text-align: center;
+      color: #fff;
+      background: linear-gradient(145deg, #000000, #8b0000);
+      overflow: hidden;
+      position: relative;
+    }
+
+    #glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.15), transparent 150px);
+      transition: background-position 0.05s;
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 1rem;
+      border: 3px solid #fff;
+      object-fit: cover;
     }
 
     .card {
       background-color: #1e293b;
       padding: 2rem 3rem;
       border-radius: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      text-align: left;
     }
 
     h1 {
@@ -81,20 +115,33 @@
       font-weight: bold;
       color: #fff;
     }
+
+    @media (max-width: 600px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Verification Successful</h1>
-    <p>Hello <span class="bold">@realsecretnobody</span> (976010151570067507), you have successfully been verified as <span class="bold">@secret</span> (1741034094).</p>
+  <div id="glow"></div>
 
-    <div class="user-info">
-      <div class="username" id="username">Loading...</div>
-      <div class="id" id="userId"></div>
+  <div class="container">
+    <img id="avatar" class="avatar" src="" alt="User Avatar" />
+
+    <div class="card">
+      <h1>Verification Successful</h1>
+      <p>Hello <span class="bold">@realsecretnobody</span> (976010151570067507), you have successfully been verified as <span class="bold">@secret</span> (1741034094).</p>
+
+      <div class="user-info">
+        <div class="username" id="username">Loading...</div>
+        <div class="id" id="userId"></div>
+      </div>
+
+      <a class="btn" href="/">Back to Home</a>
+      <a class="btn" href="/discord-login" style="margin-left: 1rem;">Reverify</a>
     </div>
-
-    <a class="btn" href="/">Back to Home</a>
-    <a class="btn" href="/discord-login" style="margin-left: 1rem;">Reverify</a>
   </div>
 
   <div class="message" id="messageBox"></div>
@@ -103,21 +150,25 @@
     const params = new URLSearchParams(window.location.search);
     const username = params.get("username");
     const userId = params.get("id");
-    const discordUser = params.get("discordUser");
-    const discordId = params.get("discordId");
 
     if (username && userId) {
       document.getElementById("username").textContent = username;
       document.getElementById("userId").textContent = `Roblox ID: ${userId}`;
+
+      // Load avatar thumbnail
+      const avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`;
+      document.getElementById("avatar").src = avatarUrl;
     } else {
       document.querySelector(".user-info").innerHTML = "<p>⚠️ No user data provided.</p>";
+      document.getElementById("avatar").style.display = "none";
     }
 
-    if (discordUser && discordId && username && userId) {
-      document.getElementById("messageBox").innerHTML = 
-        `Hello <span class="bold">@${discordUser}</span> (<span class="bold">${discordId}</span>), ` +
-        `you have successfully been verified as <span class="bold">@${username}</span> (<span class="bold">${userId}</span>).`;
-    }
+    document.addEventListener("mousemove", (e) => {
+      const x = e.clientX + "px";
+      const y = e.clientY + "px";
+      document.documentElement.style.setProperty("--x", x);
+      document.documentElement.style.setProperty("--y", y);
+    });
   </script>
 </body>
 </html>
