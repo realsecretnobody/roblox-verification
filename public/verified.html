@@ -32,57 +32,51 @@ app.get('/roblox-callback', async (req, res) => {
       });
   
       const { sub: robloxId, name: robloxUsername } = userRes.data;
-  
       const discordUser = req.session.discordUser;
   
-      // Send HTML with embedded user data:
       res.send(`<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Verification Successful</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verification Complete</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
     <style>
       body {
+        margin: 0;
+        padding: 0;
         font-family: 'Outfit', sans-serif;
-        background: linear-gradient(145deg, #0f172a, #1e293b);
-        color: #fff;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: white;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        margin: 0;
-        text-align: center;
       }
       .card {
-        background-color: #1e293b;
-        padding: 2rem 3rem;
-        border-radius: 1.5rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        max-width: 500px;
+        background: #1e293b;
+        padding: 2.5rem 3rem;
+        border-radius: 1.75rem;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        max-width: 600px;
+        width: 90%;
       }
-      h1 {
+      .card h1 {
+        font-size: 2rem;
         color: #4ade80;
-        font-size: 2.2rem;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
       }
-      p {
+      .message {
         font-size: 1.2rem;
+        color: #e2e8f0;
       }
-      .user-info {
-        margin-top: 1.5rem;
-        background-color: #334155;
-        padding: 1rem;
-        border-radius: 1rem;
-      }
-      .username, .discord-username {
+      .highlight {
         font-weight: 700;
-        font-size: 1.3rem;
+        color: #93c5fd;
       }
-      .id, .discord-id {
-        font-size: 0.95rem;
+      .id {
+        font-weight: normal;
         color: #94a3b8;
       }
       .btn {
@@ -90,22 +84,28 @@ app.get('/roblox-callback', async (req, res) => {
         margin-top: 2rem;
         padding: 0.75rem 1.5rem;
         font-size: 1rem;
-        color: white;
-        background: #4f46e5;
+        color: #fff;
+        background-color: #4f46e5;
         border: none;
         border-radius: 0.75rem;
         text-decoration: none;
-        transition: background 0.3s;
+        transition: background-color 0.3s ease;
       }
       .btn:hover {
-        background: #6366f1;
+        background-color: #6366f1;
       }
     </style>
   </head>
   <body>
     <div class="card">
       <h1>Verification Successful</h1>
-      <p>Welcome <span class="discord-username">${discordUser.username}</span> (ID: <span class="discord-id">${discordUser.id}</span>),<br/> you have successfully been verified as <span class="username">${robloxUsername}</span> (Roblox ID: <span class="id">${robloxId}</span>).</p>
+      <p class="message">
+        Welcome <span class="highlight">@${discordUser.username}</span> 
+        <span class="id">(${discordUser.id})</span>,<br>
+        you have been verified as 
+        <span class="highlight">@${robloxUsername}</span> 
+        <span class="id">(${robloxId})</span>.
+      </p>
       <a class="btn" href="/">Back to Home</a>
     </div>
   </body>
