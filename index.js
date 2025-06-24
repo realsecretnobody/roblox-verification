@@ -151,10 +151,12 @@ app.get('/roblox-callback', async (req, res) => {
 
     const { sub: robloxId, name: robloxUsername } = userRes.data;
 
-    // You now have both Discord and Roblox user info
-    // For example, respond with JSON or redirect to verified page
-    res.redirect(`/verified.html?username=${encodeURIComponent(robloxUsername)}&id=${encodeURIComponent(robloxId)}`);
+    // Grab Discord user from session
+    const discordUser = req.session.discordUser.username;
+    const discordId = req.session.discordUser.id;
 
+    // Redirect to verified page with all info
+    res.redirect(`/verified.html?username=${encodeURIComponent(robloxUsername)}&id=${encodeURIComponent(robloxId)}&discordUser=${encodeURIComponent(discordUser)}&discordId=${encodeURIComponent(discordId)}`);
 
   } catch (err) {
     console.error(err.response?.data || err);
