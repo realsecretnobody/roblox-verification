@@ -2,117 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Account Linked</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verification</title>
   <style>
     body {
-      font-family: 'Outfit', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #0d0d0d;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background-color: #000;
       height: 100vh;
-    }
-
-    .card {
-      background-color: #121212;
-      padding: 3rem 2rem;
-      border-radius: 1.25rem;
-      text-align: center;
-      max-width: 460px;
-      width: 100%;
-    }
-
-    .avatar-wrapper {
-      margin-bottom: 1.5rem;
-    }
-
-    .roblox-avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid #f43f5e;
-      object-fit: cover;
-    }
-
-    h1 {
-      color: #f43f5e;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      color: #d1d5db;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-
-    .footer {
-      border-top: 1px solid #2c2c2c;
-      padding-top: 1rem;
+      color: #fff;
+      font-family: sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.75rem;
-    }
-
-    .discord-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .discord-name {
-      font-weight: 600;
+      font-size: 1.5rem;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="avatar-wrapper">
-      <img id="robloxAvatar" class="roblox-avatar" src="" alt="Roblox Avatar" />
-    </div>
-
-    <h1>Account Linked</h1>
-    <p>
-      Hey <span id="discordName"></span> (<span id="discordId"></span>)!<br>
-      Your Roblox account <span id="robloxUsername"></span> (<span id="robloxId"></span>) has been linked to your Discord account.
-    </p>
-
-    <div class="footer">
-      <img id="discordAvatar" class="discord-avatar" src="" alt="Discord Avatar" />
-      <span class="discord-name" id="footerDiscordName"></span>
-    </div>
-  </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const robloxUsername = params.get("username");
-    const robloxId = params.get("id");
-    const discordUser = params.get("discordUser");
-    const discordId = params.get("discordId");
-    const discordAvatar = params.get("discordAvatar");
-
-    document.getElementById("discordName").textContent = discordUser || "Unknown";
-    document.getElementById("discordId").textContent = discordId || "N/A";
-    document.getElementById("robloxUsername").textContent = robloxUsername || "Unknown";
-    document.getElementById("robloxId").textContent = robloxId || "N/A";
-    document.getElementById("footerDiscordName").textContent = discordUser || "Unknown";
-
-    const robloxAvatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${robloxId}&width=150&height=150&format=png`;
-    document.getElementById("robloxAvatar").src = robloxAvatarUrl;
-
-    const discordAvatarUrl = discordAvatar
-      ? `https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png`
-      : `https://cdn.discordapp.com/embed/avatars/0.png`;
-
-    document.getElementById("discordAvatar").src = discordAvatarUrl;
-  </script>
+  Verification Successful
 </body>
 </html>
