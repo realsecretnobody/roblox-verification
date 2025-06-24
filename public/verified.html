@@ -70,6 +70,17 @@
     .btn:hover {
       background: #6366f1;
     }
+
+    .message {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+
+    .bold {
+      font-weight: bold;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -83,18 +94,29 @@
     </div>
 
     <a class="btn" href="/">Back to Home</a>
+    <a class="btn" href="/discord-login" style="margin-left: 1rem;">Reverify</a>
   </div>
+
+  <div class="message" id="messageBox"></div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const username = params.get("username");
     const userId = params.get("id");
+    const discordUser = params.get("discordUser");
+    const discordId = params.get("discordId");
 
     if (username && userId) {
       document.getElementById("username").textContent = username;
       document.getElementById("userId").textContent = `Roblox ID: ${userId}`;
     } else {
       document.querySelector(".user-info").innerHTML = "<p>⚠️ No user data provided.</p>";
+    }
+
+    if (discordUser && discordId && username && userId) {
+      document.getElementById("messageBox").innerHTML = 
+        `Hello <span class="bold">@${discordUser}</span> (<span class="bold">${discordId}</span>), ` +
+        `you have successfully been verified as <span class="bold">@${username}</span> (<span class="bold">${userId}</span>).`;
     }
   </script>
 </body>
