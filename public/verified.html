@@ -27,8 +27,8 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.15), transparent 150px);
-      transition: background-position 0.05s;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 150px);
+      transition: background-position 0.2s ease-out;
       z-index: 1;
     }
 
@@ -38,10 +38,6 @@
       display: flex;
       align-items: center;
       gap: 2rem;
-      padding: 2rem;
-      background-color: rgba(0, 0, 0, 0.2);
-      border-radius: 1.5rem;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     }
 
     .avatar {
@@ -155,19 +151,28 @@
       document.getElementById("username").textContent = username;
       document.getElementById("userId").textContent = `Roblox ID: ${userId}`;
 
-      // Load avatar thumbnail
-      const avatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`;
-      document.getElementById("avatar").src = avatarUrl;
+      // Use Roblox thumbnail API
+      const avatarUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png`;
+      
+      fetch(avatarUrl)
+        .then(res => res.json())
+        .then(data => {
+          const img = data.data[0]?.imageUrl;
+          if (img) {
+            document.getElementById("avatar").src = img;
+          }
+        });
     } else {
       document.querySelector(".user-info").innerHTML = "<p>⚠️ No user data provided.</p>";
       document.getElementById("avatar").style.display = "none";
     }
 
+    // Smooth glow follow effect
+    const glow = document.getElementById("glow");
     document.addEventListener("mousemove", (e) => {
-      const x = e.clientX + "px";
-      const y = e.clientY + "px";
-      document.documentElement.style.setProperty("--x", x);
-      document.documentElement.style.setProperty("--y", y);
+      const x = e.clientX / window.innerWidth * 100;
+      const y = e.clientY / window.innerHeight * 100;
+      glow.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255, 255, 255, 0.12), transparent 150px)`;
     });
   </script>
 </body>
