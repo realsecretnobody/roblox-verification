@@ -97,6 +97,7 @@
     const robloxId = params.get("id");
     const discordUser = params.get("discordUser");
     const discordId = params.get("discordId");
+    const discordAvatar = params.get("discordAvatar");
 
     document.getElementById("discordName").textContent = discordUser || "Unknown";
     document.getElementById("discordId").textContent = discordId || "N/A";
@@ -104,15 +105,13 @@
     document.getElementById("robloxId").textContent = robloxId || "N/A";
     document.getElementById("footerDiscordName").textContent = discordUser || "Unknown";
 
-    const robloxAvatarUrl = `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${robloxId}&size=150x150&format=Png`;
-    fetch(robloxAvatarUrl)
-      .then(res => res.json())
-      .then(data => {
-        const img = data?.data?.[0]?.imageUrl;
-        if (img) document.getElementById("robloxAvatar").src = img;
-      });
+    const robloxAvatarUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${robloxId}&width=150&height=150&format=png`;
+    document.getElementById("robloxAvatar").src = robloxAvatarUrl;
 
-    const discordAvatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${discordId}.png?size=64`;
+    const discordAvatarUrl = discordAvatar
+      ? `https://cdn.discordapp.com/avatars/${discordId}/${discordAvatar}.png`
+      : `https://cdn.discordapp.com/embed/avatars/0.png`;
+
     document.getElementById("discordAvatar").src = discordAvatarUrl;
   </script>
 </body>
